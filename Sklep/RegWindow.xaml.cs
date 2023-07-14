@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,44 +26,67 @@ namespace Sklep
 
         void Submit_Clicked(object sender, RoutedEventArgs e)
         {
-            if(!username.Text.Equals(String.Empty) && !password.Equals(String.Empty))
+            if(username.Text.Length > 3 && password.Password.ToString().Length > 3)
             {
-                using(var context = new SklepDbContext())
+                if(password.Password.ToString().Equals(secPassword.Password.ToString()))
                 {
-                    var user = context.Users.FirstOrDefault(x => x.Username.Equals(username.Text));
-                    if (user != null)
+                    using(var context = new SklepDbContext())
                     {
-                        if(user.Password.Equals(password.Password.ToString()))
+                        if(context.Users.FirstOrDefault(x=>x.Username.Equals(username.Text))==null)
                         {
-                            //todo
+                            var user = new User()
+                            {
+                                Username = username.Text,
+                                Password = secPassword.Password.ToString(),
+                                isModerator = false
+                            };
+                            context.Users.Add(user);
+                            context.SaveChanges();
+                            error.Text = "Konto utworzone pomyślnie. Możesz przejść do ekranu logowania!";
+                            error.Foreground = Brushes.Green;
+                            
+                            if (error.Visibility == Visibility.Hidden)
+                            {
+                                error.Visibility = Visibility.Visible;
+                            }                   
                         }
                         else
                         {
-                            error.Text = "Nieprawidłowe dane logowania!";
-                            if(error.Visibility == Visibility.Hidden)
+                            error.Text = "Taki użytkownik już istnieje!";
+                            error.Foreground = Brushes.Red;
+                            if (error.Visibility == Visibility.Hidden)
                             {
                                 error.Visibility = Visibility.Visible;
                             }
                         }
                     }
-                    else
+                }
+                else
+                {
+                    error.Text = "Wprowadź poprawne dane!";
+                    error.Foreground = Brushes.Red;
+                    if (error.Visibility == Visibility.Hidden)
                     {
-                        error.Text = "Nieprawidłowe dane logowania!";
-                        if (error.Visibility == Visibility.Hidden)
-                        {
-                            error.Visibility = Visibility.Visible;
-                        }
+                        error.Visibility = Visibility.Visible;
                     }
                 }
             }
             else
             {
                 error.Text = "Wprowadź poprawne dane!";
+                error.Foreground = Brushes.Red;
                 if (error.Visibility == Visibility.Hidden)
                 {
                     error.Visibility = Visibility.Visible;
                 }
             }
+
+        }
+        void Back_Clicked(object sender, RoutedEventArgs e)
+        {
+            var window = new LoginWindow();
+            window.Show();
+            this.Close();
         }
     }
 }

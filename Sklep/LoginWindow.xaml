@@ -18,6 +18,7 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Logowanie:" FontSize="20" HorizontalAlignment="Center"/>
         <TextBlock Grid.Row="1" Grid.ColumnSpan="2" x:Name="error" Foreground="Red" FontStyle="Italic" HorizontalAlignment="Center" Visibility="Hidden"/>
@@ -26,6 +27,7 @@
         <TextBox Grid.Row="2" Grid.Column="1" x:Name="username" Height="20" Width="200" HorizontalAlignment="Left"/>
         <PasswordBox Grid.Row="3" Grid.Column="1" x:Name="password" Height="20" Width="200" HorizontalAlignment="Left"/>
         <Button Grid.Row="4" Grid.Column="1" x:Name="submit" Click="Submit_Clicked" Content="Zaloguj" Height="20" Width="200" Background="Green" HorizontalAlignment="Left"/>
+        <Button Grid.Row="5" Grid.Column="1" x:Name="reg" Click="Reg_Clicked" Content="Rejestracja" Height="20" Width="200" Background="Gray" HorizontalAlignment="Left"/>
     </Grid>
 
 </Window>

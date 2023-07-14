@@ -34,7 +34,9 @@ namespace Sklep
                     {
                         if(user.Password.Equals(password.Password.ToString()))
                         {
-                            //todo
+                            var window = new MainWindow(user);
+                            window.Show();
+                            this.Close();
                         }
                         else
                         {
@@ -63,6 +65,12 @@ namespace Sklep
                     error.Visibility = Visibility.Visible;
                 }
             }
+        }
+        void Reg_Clicked(object sender, RoutedEventArgs e)
+        {
+            var window = new RegWindow();
+            window.Show();
+            this.Close();
         }
     }
 }

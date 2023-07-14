@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sklep.Context
 {
-    internal class Cart
+    public class Cart
     {
         public int Id { get; set; }
         public User User { get; set; }

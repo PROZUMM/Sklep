@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="RegWindow" Height="600" Width="900"
         ResizeMode="NoResize">
-    <Grid Height="170" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <Grid Height="200" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -19,16 +19,18 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Rejestracja:" FontSize="20" HorizontalAlignment="Center"/>
         <TextBlock Grid.Row="1" Grid.ColumnSpan="2" x:Name="error" Foreground="Red" FontStyle="Italic" HorizontalAlignment="Center" Visibility="Hidden"/>
         <TextBlock Grid.Row="2" Text="Nazwa Użytkownika" Height="20" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="2"/>
         <TextBlock Grid.Row="3" Text="Hasło" Height="20" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="2"/>
-        <TextBlock Grid.Row="4" Text="Hasło" Height="20" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="2"/>
+        <TextBlock Grid.Row="4" Text="Powtórz Hasło" Height="20" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="2"/>
         <TextBox Grid.Row="2" Grid.Column="1" x:Name="username" Height="20" Width="200" HorizontalAlignment="Left"/>
         <PasswordBox Grid.Row="3" Grid.Column="1" x:Name="password" Height="20" Width="200" HorizontalAlignment="Left"/>
         <PasswordBox Grid.Row="4" Grid.Column="1" x:Name="secPassword" Height="20" Width="200" HorizontalAlignment="Left"/>
-        <Button Grid.Row="4" Grid.Column="1" x:Name="submit" Click="Submit_Clicked" Content="Zaloguj" Height="20" Width="200" Background="Green" HorizontalAlignment="Left"/>
+        <Button Grid.Row="5" Grid.Column="1" x:Name="submit" Click="Submit_Clicked" Content="Założ konto" Height="20" Width="200" Background="Green" HorizontalAlignment="Left"/>
+        <Button Grid.Row="6" Grid.Column="1" x:Name="cancel" Click="Back_Clicked" Content="Powrót" Height="20" Width="200" Background="Gray" HorizontalAlignment="Left"/>
     </Grid>
 
 </Window>

@@ -1,0 +1,35 @@
+﻿<Window x:Class="Sklep.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Sklep"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="900"
+        ResizeMode="NoResize">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="650"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="250" Height="600" Background="LightGray"/>
+        <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="650" Height="600" Background="White"/>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Content="Produkty"/>
+            <Button Grid.Row="1" Content="Koszyk"/>
+            <Button Grid.Row="2" Content="Moje zamówienia"/>
+            <Button Grid.Row="3" Content="Dodaj Produkt" Visibility="Hidden"/>
+            <Button Grid.Row="4" Content="Użytkownicy" Visibility="Hidden"/>
+            <Button Grid.Row="5" Content="Wyloguj"/>
+        </Grid>
+    </Grid>
+
+</Window>
