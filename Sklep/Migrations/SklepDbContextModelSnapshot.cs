@@ -25,17 +25,9 @@ namespace Sklep.Migrations
             modelBuilder.Entity("Sklep.Context.Cart", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Carts");
                 });
@@ -122,8 +114,8 @@ namespace Sklep.Migrations
             modelBuilder.Entity("Sklep.Context.Cart", b =>
                 {
                     b.HasOne("Sklep.Context.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithOne("Cart")
+                        .HasForeignKey("Sklep.Context.Cart", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -164,6 +156,8 @@ namespace Sklep.Migrations
 
             modelBuilder.Entity("Sklep.Context.User", b =>
                 {
+                    b.Navigation("Cart");
+
                     b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618

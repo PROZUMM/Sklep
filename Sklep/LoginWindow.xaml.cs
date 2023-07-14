@@ -1,4 +1,5 @@
-﻿using Sklep.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using Sklep.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace Sklep
             {
                 using(var context = new SklepDbContext())
                 {
-                    var user = context.Users.FirstOrDefault(x => x.Username.Equals(username.Text));
+                    var user = context.Users.Include(x=>x.Cart).FirstOrDefault(x => x.Username.Equals(username.Text));
                     if (user != null)
                     {
                         if(user.Password.Equals(password.Password.ToString()))

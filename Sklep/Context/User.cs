@@ -12,6 +12,8 @@ namespace Sklep.Context
         public string Username { get; set; }
         public string Password { get; set; }
         public bool isModerator { get; set; }
-        public List<Order> Orders { get; set; }
+        public List<Order> Orders { get; set; } = new();
+
+        public Cart? Cart { get; set; }
     }
 }

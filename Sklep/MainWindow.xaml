@@ -23,13 +23,46 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Button Grid.Row="0" Content="Produkty"/>
-            <Button Grid.Row="1" Content="Koszyk"/>
-            <Button Grid.Row="2" Content="Moje zamówienia"/>
-            <Button Grid.Row="3" Content="Dodaj Produkt" Visibility="Hidden"/>
-            <Button Grid.Row="4" Content="Użytkownicy" Visibility="Hidden"/>
-            <Button Grid.Row="5" Content="Wyloguj"/>
+            <Button Grid.Row="0" Content="Produkty" Click="items_Clicked"/>
+            <Button Grid.Row="1" Content="Koszyk" Click="cart_Clicked"/>
+            <Button Grid.Row="2" Content="Moje zamówienia" Click="orders_Clicked"/>
+            <Button x:Name="addProduct"  Grid.Row="3" Content="Dodaj Produkt" Visibility="Hidden" Click="addProduct_Clicked"/>
+            <Button x:Name="users" Grid.Row="4" Content="Użytkownicy" Visibility="Hidden" Click="users_Clicked"/>
+            <Button Grid.Row="5" Content="Wyloguj" Click="logout_Clicked"/>
         </Grid>
+
+        <StackPanel Grid.Column="1" x:Name="addproductPanel" Visibility="Hidden">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="250"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Dodawanie produktu:" FontSize="30" FontStyle="Italic"/>
+                <TextBlock Grid.Row="1" Grid.ColumnSpan="2" x:Name="error" Foreground="Red" FontStyle="Italic" Visibility="Hidden"/>
+                <TextBlock Grid.Row="2" Text="Nazwa" Padding="2"/>
+                <TextBlock Grid.Row="3" Text="Opis" Padding="2"/>
+                <TextBlock Grid.Row="4" Text="Cena" Padding="2"/>
+                <Button Grid.Row="5" Grid.Column="1" Content="Dodaj" Background="Green" Width="250" HorizontalAlignment="Center" Margin="2" Click="Submit_addProduct_Clicked"/>
+                <TextBox x:Name="name" Grid.Row="2" Grid.Column="1" Margin="2"/>
+                <TextBox x:Name="description"  Grid.Row="3" Grid.Column="1" Margin="2"/>
+                <TextBox x:Name="price" Grid.Row="4" Grid.Column="1" Margin="2"/>
+            </Grid>
+        </StackPanel>
+
+        <ScrollViewer Grid.Column="1" x:Name="productsPanel" Visibility="Visible" HorizontalScrollBarVisibility="Auto">
+            <StackPanel x:Name="productsHolder"/>
+        </ScrollViewer>
+        <ScrollViewer Grid.Column="1" x:Name="cartPanel" Visibility="Hidden" HorizontalScrollBarVisibility="Auto">
+            <StackPanel x:Name="cartHolder"/>
+        </ScrollViewer>
     </Grid>
 
 </Window>

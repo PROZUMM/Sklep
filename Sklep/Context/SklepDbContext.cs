@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,6 +22,8 @@ namespace Sklep.Context
         {
             modelBuilder.Entity<User>().
                 HasMany(u => u.Orders).WithOne(u =>u.User).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<User>().
+                HasOne(u=>u.Cart).WithOne(u=>u.User).HasForeignKey<Cart>(e => e.Id).OnDelete(DeleteBehavior.Cascade);
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -12,8 +12,8 @@ using Sklep.Context;
 namespace Sklep.Migrations
 {
     [DbContext(typeof(SklepDbContext))]
-    [Migration("20230714174512_init")]
-    partial class init
+    [Migration("20230714211019_nullablecart")]
+    partial class nullablecart
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,17 +28,9 @@ namespace Sklep.Migrations
             modelBuilder.Entity("Sklep.Context.Cart", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Carts");
                 });
@@ -125,8 +117,8 @@ namespace Sklep.Migrations
             modelBuilder.Entity("Sklep.Context.Cart", b =>
                 {
                     b.HasOne("Sklep.Context.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithOne("Cart")
+                        .HasForeignKey("Sklep.Context.Cart", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -167,6 +159,8 @@ namespace Sklep.Migrations
 
             modelBuilder.Entity("Sklep.Context.User", b =>
                 {
+                    b.Navigation("Cart");
+
                     b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
