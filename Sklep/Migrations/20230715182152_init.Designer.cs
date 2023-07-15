@@ -12,8 +12,8 @@ using Sklep.Context;
 namespace Sklep.Migrations
 {
     [DbContext(typeof(SklepDbContext))]
-    [Migration("20230714211019_nullablecart")]
-    partial class nullablecart
+    [Migration("20230715182152_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,10 +25,28 @@ namespace Sklep.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ItemOrder", b =>
+                {
+                    b.Property<int>("OrderedItemsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrdersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderedItemsId", "OrdersId");
+
+                    b.HasIndex("OrdersId");
+
+                    b.ToTable("ItemOrder");
+                });
+
             modelBuilder.Entity("Sklep.Context.Cart", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.HasKey("Id");
 
@@ -46,6 +64,9 @@ namespace Sklep.Migrations
                     b.Property<int?>("CartId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -54,17 +75,12 @@ namespace Sklep.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CartId");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("Items");
                 });
@@ -83,6 +99,9 @@ namespace Sklep.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<double>("fullPrice")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
@@ -98,6 +117,9 @@ namespace Sklep.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -111,18 +133,25 @@ namespace Sklep.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CartId")
+                        .IsUnique();
+
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Sklep.Context.Cart", b =>
+            modelBuilder.Entity("ItemOrder", b =>
                 {
-                    b.HasOne("Sklep.Context.User", "User")
-                        .WithOne("Cart")
-                        .HasForeignKey("Sklep.Context.Cart", "Id")
+                    b.HasOne("Sklep.Context.Item", null)
+                        .WithMany()
+                        .HasForeignKey("OrderedItemsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.HasOne("Sklep.Context.Order", null)
+                        .WithMany()
+                        .HasForeignKey("OrdersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Sklep.Context.Item", b =>
@@ -130,10 +159,6 @@ namespace Sklep.Migrations
                     b.HasOne("Sklep.Context.Cart", null)
                         .WithMany("Items")
                         .HasForeignKey("CartId");
-
-                    b.HasOne("Sklep.Context.Order", null)
-                        .WithMany("Items")
-                        .HasForeignKey("OrderId");
                 });
 
             modelBuilder.Entity("Sklep.Context.Order", b =>
@@ -147,20 +172,27 @@ namespace Sklep.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Sklep.Context.User", b =>
+                {
+                    b.HasOne("Sklep.Context.Cart", "Cart")
+                        .WithOne("User")
+                        .HasForeignKey("Sklep.Context.User", "CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+                });
+
             modelBuilder.Entity("Sklep.Context.Cart", b =>
                 {
                     b.Navigation("Items");
-                });
 
-            modelBuilder.Entity("Sklep.Context.Order", b =>
-                {
-                    b.Navigation("Items");
+                    b.Navigation("User")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Sklep.Context.User", b =>
                 {
-                    b.Navigation("Cart");
-
                     b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618

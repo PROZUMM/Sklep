@@ -63,6 +63,12 @@
         <ScrollViewer Grid.Column="1" x:Name="cartPanel" Visibility="Hidden" HorizontalScrollBarVisibility="Auto">
             <StackPanel x:Name="cartHolder"/>
         </ScrollViewer>
+        <ScrollViewer Grid.Column="1" x:Name="ordersPanel" Visibility="Hidden" HorizontalScrollBarVisibility="Auto">
+            <StackPanel x:Name="orderHolder"/>
+        </ScrollViewer>
+        <ScrollViewer Grid.Column="1" x:Name="usersPanel" Visibility="Hidden" HorizontalScrollBarVisibility="Auto">
+            <StackPanel x:Name="usersHolder"/>
+        </ScrollViewer>
     </Grid>
 
 </Window>

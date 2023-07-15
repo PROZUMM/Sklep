@@ -14,6 +14,7 @@ namespace Sklep.Context
         public bool isModerator { get; set; }
         public List<Order> Orders { get; set; } = new();
 
-        public Cart? Cart { get; set; }
+        public int CartId { get; set; }
+        public virtual Cart Cart { get; set; }
     }
 }

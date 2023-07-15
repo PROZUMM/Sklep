@@ -34,13 +34,17 @@ namespace Sklep
                     {
                         if(context.Users.FirstOrDefault(x=>x.Username.Equals(username.Text))==null)
                         {
+                            var cart = new Cart();
                             var user = new User()
                             {
                                 Username = username.Text,
                                 Password = secPassword.Password.ToString(),
-                                isModerator = false
+                                isModerator = false,
+                                Cart = cart
                             };
+                            context.Carts.Add(cart);
                             context.Users.Add(user);
+
                             context.SaveChanges();
                             error.Text = "Konto utworzone pomyślnie. Możesz przejść do ekranu logowania!";
                             error.Foreground = Brushes.Green;

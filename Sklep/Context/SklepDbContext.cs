@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Sklep.Context
 {
-    internal class SklepDbContext : DbContext
+    public class SklepDbContext : DbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Item> Items { get; set; }
@@ -21,9 +21,11 @@ namespace Sklep.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().
-                HasMany(u => u.Orders).WithOne(u =>u.User).OnDelete(DeleteBehavior.Cascade);
+                HasMany(u => u.Orders).WithOne(u => u.User).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<User>().
-                HasOne(u=>u.Cart).WithOne(u=>u.User).HasForeignKey<Cart>(e => e.Id).OnDelete(DeleteBehavior.Cascade);
+                HasOne(u => u.Cart).WithOne(u => u.User).HasForeignKey<User>(e => e.CartId);
+            modelBuilder.Entity<Order>().
+                HasMany(o => o.OrderedItems).WithMany(o => o.Orders);
             base.OnModelCreating(modelBuilder);
         }
     }

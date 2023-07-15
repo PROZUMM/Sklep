@@ -28,25 +28,15 @@ namespace Sklep
         {
             if(!username.Text.Equals(String.Empty) && !password.Equals(String.Empty))
             {
-                using(var context = new SklepDbContext())
+                var context = new SklepDbContext();
+                var user = context.Users.FirstOrDefault(x => x.Username.Equals(username.Text));
+                if (user != null)
                 {
-                    var user = context.Users.Include(x=>x.Cart).FirstOrDefault(x => x.Username.Equals(username.Text));
-                    if (user != null)
+                    if (user.Password.Equals(password.Password.ToString()))
                     {
-                        if(user.Password.Equals(password.Password.ToString()))
-                        {
-                            var window = new MainWindow(user);
-                            window.Show();
-                            this.Close();
-                        }
-                        else
-                        {
-                            error.Text = "Nieprawidłowe dane logowania!";
-                            if(error.Visibility == Visibility.Hidden)
-                            {
-                                error.Visibility = Visibility.Visible;
-                            }
-                        }
+                        var window = new MainWindow(user.Id, context);
+                        window.Show();
+                        this.Close();
                     }
                     else
                     {
@@ -55,6 +45,14 @@ namespace Sklep
                         {
                             error.Visibility = Visibility.Visible;
                         }
+                    }
+                }
+                else
+                {
+                    error.Text = "Nieprawidłowe dane logowania!";
+                    if (error.Visibility == Visibility.Hidden)
+                    {
+                        error.Visibility = Visibility.Visible;
                     }
                 }
             }
